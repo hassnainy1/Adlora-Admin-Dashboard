@@ -1,0 +1,291 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tailwind v4 leaves buttons with the default cursor. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  input:is([type="button"], [type="submit"], [type="reset"]):not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Design tokens — Adlora Admin
+ * Light theme in :root, dark overrides in .dark.
+ * Reference in markup with canonical Tailwind v4 var syntax:
+ *   bg-(--surface)  text-(--text-muted)  border-(--border)
+ * ------------------------------------------------------------------ */
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --background: #eaedf3;
+  --surface: #ffffff;
+  --surface-2: #eef1f5;
+  --surface-hover: #f5f7fa;
+
+  /* Borders */
+  --border: #dde1e8;
+  --border-subtle: #e8ebf0;
+
+  /* Text */
+  --text: #141720;
+  --text-secondary: #3c424e;
+  --text-muted: #69707c;
+  --text-subtle: #969da9;
+
+  /* Brand accent (Adlora gold; darkened for AA contrast on light surfaces) */
+  --accent: #96660a;
+  --accent-hover: #875408;
+  --accent-soft: #f8eed3;
+  --accent-foreground: #ffffff;
+
+  /* Status */
+  --success: #137a4b;
+  --success-soft: #e0f3e9;
+  --warning: #9a6700;
+  --warning-soft: #faeed1;
+  --danger: #c02b2b;
+  --danger-soft: #fbe5e5;
+  --info: #1f6fb2;
+  --info-soft: #e1eef8;
+
+  /* Categorical accents */
+  --c-violet: #6d28d9;
+  --c-violet-soft: #f0ebfd;
+  --c-blue: #1d6fdb;
+  --c-blue-soft: #e4eefc;
+  --c-emerald: #047857;
+  --c-emerald-soft: #e0f3e9;
+  --c-amber: #b45309;
+  --c-amber-soft: #faeed4;
+  --c-rose: #be1d4d;
+  --c-rose-soft: #fbe5ec;
+  --c-cyan: #0e7490;
+  --c-cyan-soft: #def2f6;
+
+  /* Sidebar (deep slate, consistent across themes) */
+  --sidebar-accent: #e8b04b;
+  --sidebar-accent-foreground: #1c1607;
+  --sidebar: #15171c;
+  --sidebar-elevated: #1e2128;
+  --sidebar-border: #272b33;
+  --sidebar-text: #c4c9d2;
+  --sidebar-text-muted: #7d838f;
+  --sidebar-active: #2a2e37;
+
+  /* Glassmorphism */
+  --glass-bg: rgb(255 255 255 / 0.5);
+  --glass-border: rgb(255 255 255 / 0.65);
+  --glass-highlight: rgb(255 255 255 / 0.55);
+  --glass-shadow: rgb(20 22 40 / 0.16);
+
+  /* Ambient color-wash (shown behind glass) */
+  --wash-1: rgb(109 40 217 / 0.22);
+  --wash-2: rgb(29 111 219 / 0.2);
+  --wash-3: rgb(14 116 144 / 0.16);
+
+  /* Layout metrics */
+  --sidebar-width: 16rem;
+  --topbar-height: 3.75rem;
+  --radius: 0.625rem;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --background: #0a0c10;
+  --surface: #14171d;
+  --surface-2: #1b1f27;
+  --surface-hover: #1a1e26;
+
+  --border: #272c36;
+  --border-subtle: #1f242d;
+
+  --text: #e8eaf0;
+  --text-secondary: #bcc2cd;
+  --text-muted: #868d99;
+  --text-subtle: #5c636f;
+
+  --accent: #e8b04b;
+  --accent-hover: #f0b856;
+  --accent-soft: #2c230f;
+  --accent-foreground: #1c1607;
+
+  --success: #4ade80;
+  --success-soft: #112620;
+  --warning: #f5c451;
+  --warning-soft: #2a2110;
+  --danger: #f87171;
+  --danger-soft: #2c1717;
+  --info: #60a5fa;
+  --info-soft: #14202e;
+
+  --c-violet: #a78bfa;
+  --c-violet-soft: #211d3a;
+  --c-blue: #60a5fa;
+  --c-blue-soft: #14202e;
+  --c-emerald: #34d399;
+  --c-emerald-soft: #112620;
+  --c-amber: #fbbf24;
+  --c-amber-soft: #2a2110;
+  --c-rose: #fb7185;
+  --c-rose-soft: #2c1720;
+  --c-cyan: #22d3ee;
+  --c-cyan-soft: #0f242a;
+
+  --sidebar: #0e1014;
+  --sidebar-elevated: #181b22;
+  --sidebar-border: #21252e;
+  --sidebar-text: #b8bec9;
+  --sidebar-text-muted: #6b7280;
+  --sidebar-active: #20242d;
+
+  --glass-bg: rgb(30 34 44 / 0.5);
+  --glass-border: rgb(255 255 255 / 0.1);
+  --glass-highlight: rgb(255 255 255 / 0.08);
+  --glass-shadow: rgb(0 0 0 / 0.4);
+
+  --wash-1: rgb(124 108 242 / 0.22);
+  --wash-2: rgb(56 132 255 / 0.18);
+  --wash-3: rgb(34 211 238 / 0.14);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-padding-top: var(--topbar-height);
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ambient color wash — gives glass surfaces something to refract */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(50rem 50rem at 5% -8%, var(--wash-1), transparent 58%),
+    radial-gradient(46rem 46rem at 98% 4%, var(--wash-2), transparent 58%),
+    radial-gradient(44rem 44rem at 55% 112%, var(--wash-3), transparent 58%);
+}
+
+/* Reusable glass surface */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    0 1px 0 0 var(--glass-highlight) inset,
+    0 12px 36px -20px var(--glass-shadow);
+}
+
+/* Thin scrollbars for data-dense panels */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Scrollable but scrollbar-less (e.g. the sidebar nav) — content still scrolls, the track just doesn't render. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * High-contrast text selection for rich text content (the Editor.js instance
+ * itself and its rendered previews, e.g. blog-view) — both carry
+ * `.prose-editor`. `!important` guarantees this wins over Editor.js's own
+ * stylesheet, which it injects into <head> at runtime (after this file), so
+ * source order alone can't be relied on to settle the tie.
+ */
+.prose-editor ::selection {
+  background-color: var(--accent) !important;
+  color: var(--accent-foreground) !important;
+}
+.prose-editor ::-moz-selection {
+  background-color: var(--accent) !important;
+  color: var(--accent-foreground) !important;
+}
+
+/* Rendered HTML for static content pages (Privacy, Terms, Help) */
+.page-content h1,
+.page-content h2,
+.page-content h3 {
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 1.25em 0 0.5em;
+}
+.page-content h1 { font-size: 1.25rem; }
+.page-content h2 { font-size: 1.05rem; }
+.page-content h3 { font-size: 0.95rem; }
+.page-content > :first-child { margin-top: 0; }
+.page-content p { margin: 0.5em 0; }
+.page-content ul,
+.page-content ol { margin: 0.5em 0; padding-left: 1.25em; }
+.page-content ul { list-style: disc; }
+.page-content ol { list-style: decimal; }
+.page-content li { margin: 0.25em 0; }
+.page-content a { color: var(--accent); text-decoration: underline; }
+.page-content strong { color: var(--text); font-weight: 600; }
+
+/* ---- Chart animations (CSS keyframes: deterministic, always reach final state) ---- */
+@keyframes chart-bar-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes chart-line-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes chart-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.chart-bar {
+  transform-origin: bottom;
+  animation: chart-bar-grow 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* Pair with pathLength={1} on the SVG element so units are normalized. */
+.chart-line {
+  stroke-dasharray: 1 1;
+  animation: chart-line-draw 1.1s ease-in-out both;
+}
+.chart-area-fill {
+  animation: chart-fade-in 0.8s ease-out 0.35s both;
+}
+.chart-dot {
+  animation: chart-fade-in 0.35s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-bar,
+  .chart-line,
+  .chart-area-fill,
+  .chart-dot {
+    animation: none;
+  }
+}
